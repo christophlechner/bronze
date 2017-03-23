@@ -1,0 +1,17 @@
+#Travis CI project descriptor
+language: java
+jdk: oraclejdk8
+script: mvn clean verify
+
+before_deploy:
+  - export RELEASE_PKG_FILE=$(ls target/travis-*.jar)
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+deploy:
+  provider: releases
+  api_key:
+    secure: Q6QpGH473gkppVkZRY0S/mFYuy7ACmhACNBUnq5PeMqYKOrTpvZ5PMt0eR2Z6XOGrtFc7xuVoWxSMc2gL/HwJyeVEY2LjpSkFkI/Bee8LXd6UYd454NOZTpbQicidmEP3Pqx3FjlhBb6MlcK4XZJGlKKBl9NDjPRA4yAjT77xTzgceZxZduNQ07hsopxAa7h8UX0sv0b5VjuMXvA7kWlFdTvw6E5T3BMM4Kgbc4/YqIloLgbNMTsmz4sXRLqU1lirAm91PD2BDmeyp60xpMqmzHcOwWDaCJpgiLSXK6BLcAk72kKjknLiKde0KIlP5tQIuBySyNLoY5m37qhVcuSO2tLNPsB4Ti99ipfAtRzFLDKyeHk+4v0REFQ8Sv8nrlnnW8F4wyFFPuaxHscs87wFH9I+I4WDbt6gyMIy6h3be+E4hANZbA/760IbnweK6nkFRO8a84crS718K7J9Tza6FWDzunp/zmb4Rb65DwfkQcv2YhaXn+1l0h/eSAkpFgLPcBZbvBHdnke5EbT2vCe/8LjiPxn5WAfrBwhrAoa2ZuarvSYnuwuxfB2xjlQmTybGbNASb01iDwk40Ui6KuLHsTVI/e/vPwl4K+6qHoso+GIPfQ04AC9lI15MXQRJ6JL+PLt6rNO2EPAFeMZUqqBKcX9aEcUGemVG2Uim8nZqNc=
+  file_glob: true
+  file: "${RELEASE_PKG_FILE}"
+  skip_cleanup: true
+  on:
+    tags: true
