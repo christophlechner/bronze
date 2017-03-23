@@ -31,7 +31,8 @@ public class GruppeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Gruppe> list() {
-        return em.createQuery("select g from Gruppe g", Gruppe.class).getResultList();
+        return em.createQuery("select g from Gruppe g", Gruppe.class)
+                .getResultList();
     }
         
     @GET
